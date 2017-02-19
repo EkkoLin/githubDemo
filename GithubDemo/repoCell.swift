@@ -32,6 +32,16 @@ class repoCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        posterView.layer.cornerRadius = 8
+        posterView.clipsToBounds = true
+        
+        titleLabel.preferredMaxLayoutWidth = titleLabel.frame.size.width
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        titleLabel.preferredMaxLayoutWidth = titleLabel.frame.size.width
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
