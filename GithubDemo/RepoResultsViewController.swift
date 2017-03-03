@@ -3,7 +3,7 @@ import MBProgressHUD
 import AFNetworking
 
 // Main ViewController
-class RepoResultsViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate{
+class RepoResultsViewController: UIViewController,  UITableViewDataSource, UITableViewDelegate, SettingPresentViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     var searchBar: UISearchBar!
@@ -14,7 +14,7 @@ class RepoResultsViewController: UIViewController,  UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+            
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -54,7 +54,7 @@ class RepoResultsViewController: UIViewController,  UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as! repoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "repoCell", for: indexPath) as!repoCell
         
         cell.repo = repos[indexPath.row]
         
@@ -83,6 +83,25 @@ class RepoResultsViewController: UIViewController,  UITableViewDataSource, UITab
         })
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navController = segue.destination as! UINavigationController
+        let vc = navController.topViewController as! SearchSettingViewController
+        vc.settings = searchSettings
+        vc.delegate = self
+    }
+    
+    
+    func didSaveSetting(settings: GithubRepoSearchSettings)
+    {
+        searchSettings = settings
+        doSearch()
+    }
+    
+    
+    func didCancelSetting() {
+    }
+    
 }
 
 // SearchBar methods
